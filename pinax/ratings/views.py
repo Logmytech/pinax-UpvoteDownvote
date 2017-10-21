@@ -13,8 +13,8 @@ try:
 except ImportError:
     from django.contrib.auth.mixins import LoginRequiredMixin
 
-NUM_OF_RATINGS = getattr(settings, "PINAX_RATINGS_NUM_OF_RATINGS", 1)
-RATING_VALUE_LIST = [-1 * NUM_OF_RATINGS , 0, NUM_OF_RATINGS]
+#NUM_OF_RATINGS = getattr(settings, "PINAX_RATINGS_NUM_OF_RATINGS", 1)
+RATING_VALUE_LIST = [1,0,-1]
 
 
 class RateView(LoginRequiredMixin, View):
