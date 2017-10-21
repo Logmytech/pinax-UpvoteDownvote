@@ -14,7 +14,7 @@ except:
     from django.contrib.contenttypes.generic import GenericForeignKey
 from django.contrib.contenttypes.models import ContentType
 
-#from .categories import RATING_CATEGORY_CHOICES
+
 from .managers import OverallRatingManager
 
 
@@ -24,7 +24,6 @@ class OverallRating(models.Model):
     content_type = models.ForeignKey(ContentType)
     content_object = GenericForeignKey()
     rating = models.IntegerField(null=True)
-#    category = models.CharField(max_length=250, blank=True, choices=RATING_CATEGORY_CHOICES)
 
     objects = OverallRatingManager()
 
@@ -35,7 +34,7 @@ class OverallRating(models.Model):
 
     def update(self):
         r = Rating.objects.filter(overall_rating=self).aggregate(r=Avg("rating"))["r"] or 0
-        self.rating = Decimal(str(r))
+        self.rating = int(str(r))
         self.save()
 
 
@@ -48,7 +47,6 @@ class Rating(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL)
     rating = models.IntegerField(validators=[MaxValueValidator(1),MinValueValidator(-1)])
     timestamp = models.DateTimeField(default=timezone.now)
-#    category = models.CharField(max_length=250, blank=True, choices=RATING_CATEGORY_CHOICES)
 
     def clear(self):
         overall = self.overall_rating
