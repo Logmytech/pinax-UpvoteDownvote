@@ -13,7 +13,7 @@ setup(
     author="Pinax Team",
     author_email="team@pinaxproject.com",
     description="a Upvote and Downvote app for Django",
-    name="pinax-upvotedownvote",
+    name="pinax-ratings",
     long_description=read("README.rst"),
     version="2.0.0",
     url="https://github.com/Logmytech/pinax-UpvoteDownvote/",
