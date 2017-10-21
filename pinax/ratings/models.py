@@ -21,7 +21,7 @@ class OverallRating(models.Model):
     object_id = models.IntegerField(db_index=True)
     content_type = models.ForeignKey(ContentType)
     content_object = GenericForeignKey()
-    rating = models.DecimalField(decimal_places=1, max_digits=6, null=True)
+    rating = models.IntegerField(null=True)
     category = models.CharField(max_length=250, blank=True, choices=RATING_CATEGORY_CHOICES)
 
     objects = OverallRatingManager()
@@ -44,7 +44,7 @@ class Rating(models.Model):
     content_type = models.ForeignKey(ContentType)
     content_object = GenericForeignKey()
     user = models.ForeignKey(settings.AUTH_USER_MODEL)
-    rating = models.IntegerField()
+    rating = models.IntegerField(validators=[MaxValueValidator(1),MinValueValidator(-1)])
     timestamp = models.DateTimeField(default=timezone.now)
     category = models.CharField(max_length=250, blank=True, choices=RATING_CATEGORY_CHOICES)
 
