@@ -13,7 +13,8 @@ try:
 except ImportError:
     from django.contrib.auth.mixins import LoginRequiredMixin
 
-NUM_OF_RATINGS = getattr(settings, "PINAX_RATINGS_NUM_OF_RATINGS", 5)
+NUM_OF_RATINGS = getattr(settings, "PINAX_RATINGS_NUM_OF_RATINGS", 1)
+RATING_VALUE_LIST = [-1 * NUM_OF_RATINGS , 0, NUM_OF_RATINGS]
 
 
 class RateView(LoginRequiredMixin, View):
@@ -30,7 +31,7 @@ class RateView(LoginRequiredMixin, View):
             return HttpResponseForbidden(
                 "Invalid category. It must match a preconfigured setting"
             )
-        if rating_input not in range(NUM_OF_RATINGS + 1):
+        if rating_input not in RATING_VALUE_LIST:
             return HttpResponseForbidden(
                 "Invalid rating. It must be a value between 0 and %s" % NUM_OF_RATINGS
             )
