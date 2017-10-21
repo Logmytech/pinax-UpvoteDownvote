@@ -5,7 +5,7 @@ from django.shortcuts import get_object_or_404
 from django.template.loader import render_to_string
 from django.views.generic import View
 
-from .categories import category_value
+#from .categories import category_value
 from .models import Rating
 
 try:
@@ -23,14 +23,14 @@ class RateView(LoginRequiredMixin, View):
         ct = get_object_or_404(ContentType, pk=self.kwargs.get("content_type_id"))
         obj = get_object_or_404(ct.model_class(), pk=self.kwargs.get("object_id"))
         rating_input = int(request.POST.get("rating"))
-        category = request.POST.get("category", "")
-        cat_choice = category_value(obj, category)
+#        category = request.POST.get("category", "")
+#        cat_choice = category_value(obj, category)
 
         # Check for errors and bail early
-        if category and cat_choice is None:
-            return HttpResponseForbidden(
-                "Invalid category. It must match a preconfigured setting"
-            )
+#        if category and cat_choice is None:
+#            return HttpResponseForbidden(
+#                "Invalid category. It must match a preconfigured setting"
+#            )
         if rating_input not in RATING_VALUE_LIST:
             return HttpResponseForbidden(
                 "Invalid rating. It must be a value between 0 and %s" % NUM_OF_RATINGS
@@ -38,12 +38,10 @@ class RateView(LoginRequiredMixin, View):
 
         data = {
             "user_rating": rating_input,
-            "category": category,
             "overall_rating": Rating.update(
                 rating_object=obj,
                 user=request.user,
-                category=cat_choice,
-                rating=rating_input
+                rating=rating_input,
             )
         }
         # add support for eldarion-ajax
