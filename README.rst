@@ -32,22 +32,7 @@ This app was developed as part of the Pinax ecosystem but is just a Django app a
 pinax-ratings
 --------------
 
-``pinax-ratings`` is a ratings app for Django.
-
-
-Running the Tests
-------------------------------------
-
-::
-
-    $ pip install detox
-    $ detox
-
-
-Documentation
---------------
-
-The ``pinax-ratings`` documentation is available at https://agon-ratings.readthedocs.org/en/latest/. The Pinax documentation is available at http://pinaxproject.com/pinax/.
+``pinax-UpvoteDownvote`` is a Downvote and Upvote app for Django.
 
 
 Contribute
