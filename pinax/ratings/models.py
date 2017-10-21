@@ -6,6 +6,8 @@ from django.db.models import Avg
 from django.utils import timezone
 from django.utils.encoding import python_2_unicode_compatible
 
+from django.core.validators import MaxValueValidator, MinValueValidator
+
 try:
     from django.contrib.contenttypes.fields import GenericForeignKey
 except:
