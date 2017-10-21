@@ -12,11 +12,11 @@ def read(*parts):
 setup(
     author="Pinax Team",
     author_email="team@pinaxproject.com",
-    description="a ratings app for Django",
-    name="pinax-ratings",
+    description="a Upvote and Downvote app for Django",
+    name="pinax-upvotedownvote",
     long_description=read("README.rst"),
     version="2.0.0",
-    url="http://github.com/pinax/pinax-ratings/",
+    url="https://github.com/Logmytech/pinax-UpvoteDownvote/",
     license="MIT",
     packages=find_packages(),
     package_data={
