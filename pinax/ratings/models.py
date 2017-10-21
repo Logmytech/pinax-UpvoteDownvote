@@ -14,7 +14,7 @@ except:
     from django.contrib.contenttypes.generic import GenericForeignKey
 from django.contrib.contenttypes.models import ContentType
 
-from .categories import RATING_CATEGORY_CHOICES
+#from .categories import RATING_CATEGORY_CHOICES
 from .managers import OverallRatingManager
 
 
@@ -24,13 +24,13 @@ class OverallRating(models.Model):
     content_type = models.ForeignKey(ContentType)
     content_object = GenericForeignKey()
     rating = models.IntegerField(null=True)
-    category = models.CharField(max_length=250, blank=True, choices=RATING_CATEGORY_CHOICES)
+#    category = models.CharField(max_length=250, blank=True, choices=RATING_CATEGORY_CHOICES)
 
     objects = OverallRatingManager()
 
     class Meta:
         unique_together = [
-            ("object_id", "content_type", "category"),
+            ("object_id", "content_type"),
         ]
 
     def update(self):
@@ -48,7 +48,7 @@ class Rating(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL)
     rating = models.IntegerField(validators=[MaxValueValidator(1),MinValueValidator(-1)])
     timestamp = models.DateTimeField(default=timezone.now)
-    category = models.CharField(max_length=250, blank=True, choices=RATING_CATEGORY_CHOICES)
+#    category = models.CharField(max_length=250, blank=True, choices=RATING_CATEGORY_CHOICES)
 
     def clear(self):
         overall = self.overall_rating
@@ -64,7 +64,6 @@ class Rating(models.Model):
             object_id=rating_object.pk,
             content_type=ct,
             user=user,
-            category=category
         ).first()
 
         if rating_obj and rating == 0:
@@ -75,13 +74,11 @@ class Rating(models.Model):
                 object_id=rating_object.pk,
                 content_type=ct,
                 user=user,
-                category=category,
-                rating=rating
+                rating=rating,
             )
         overall, _ = OverallRating.objects.get_or_create(
             object_id=rating_object.pk,
             content_type=ct,
-            category=category
         )
         rating_obj.overall_rating = overall
         rating_obj.rating = rating
@@ -91,7 +88,7 @@ class Rating(models.Model):
 
     class Meta:
         unique_together = [
-            ("object_id", "content_type", "user", "category"),
+            ("object_id", "content_type", "user",),
         ]
 
     def __str__(self):
